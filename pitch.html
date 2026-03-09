@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OrganicOS — Investor Pitch</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --moss:   #2D4A2D;
+  --fern:   #3D6B3D;
+  --sage:   #7A9E7A;
+  --mist:   #C4D9C4;
+  --fog:    #EEF4EE;
+  --chalk:  #F7FAF7;
+  --ink:    #1A1F1A;
+  --stone:  #4A5247;
+  --pebble: #8A9488;
+  --amber:  #D4860A;
+  --white:  #FFFFFF;
+  --black:  #0C0C0A;
+  --serif:  'Lora', Georgia, serif;
+  --sans:   'DM Sans', sans-serif;
+  --mono:   'DM Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #111;
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  font-family: var(--sans);
+}
+
+#deck-scaler {
+  position: fixed;
+  top: 0; left: 0;
+  width: 1280px; height: 720px;
+  transform-origin: top left;
+}
+
+#deck {
+  position: relative;
+  width: 1280px; height: 720px;
+  overflow: hidden;
+}
+
+.slide {
+  display: none;
+  position: absolute;
+  top: 0; left: 0;
+  width: 1280px; height: 720px;
+  overflow: hidden;
+}
+.slide.active { display: flex; }
+
+/* ── SHARED ── */
+.lm { font-family: var(--serif); font-size: 15px; font-weight: 500; line-height: 1; }
+.lm em { font-weight: 300; font-style: italic; color: var(--sage); }
+
+.sn { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; opacity: .35; }
+
+.chrome {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 44px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 52px; z-index: 10;
+}
+.chrome-l { border-top: 1px solid rgba(0,0,0,.07); color: var(--stone); }
+.chrome-d { border-top: 1px solid rgba(255,255,255,.07); color: rgba(255,255,255,.3); }
+
+.label {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--sage);
+}
+
+/* botanical SVG mark — reused across slides */
+.bot { position: absolute; pointer-events: none; }
+
+/* ════════════════════════════════
+   S01 — COVER
+════════════════════════════════ */
+.s01 {
+  background: var(--moss);
+  align-items: center; justify-content: center;
+  text-align: center; flex-direction: column;
+}
+.s01-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, #3D6B3D 0%, transparent 70%);
+}
+.s01-content { position: relative; z-index: 1; }
+.s01-wm {
+  font-family: var(--serif); font-size: 96px; font-weight: 500;
+  color: var(--white); line-height: 1; margin-bottom: 28px;
+}
+.s01-wm em { font-style: italic; font-weight: 300; color: var(--sage); }
+.s01-rule { width: 48px; height: 1px; background: var(--sage); margin: 0 auto 28px; }
+.s01-tag {
+  font-size: 20px; font-weight: 300; color: rgba(255,255,255,.6);
+  letter-spacing: .02em;
+}
+
+/* ════════════════════════════════
+   S02 — HOOK
+════════════════════════════════ */
+.s02 {
+  background: var(--chalk);
+  align-items: center; justify-content: center;
+  text-align: center; flex-direction: column;
+}
+.s02-h {
+  font-family: var(--serif); font-size: 72px; font-weight: 500;
+  color: var(--moss); line-height: 1.12; max-width: 900px;
+}
+.s02-h em { font-style: italic; font-weight: 300; color: var(--stone); }
+.s02-sub {
+  margin-top: 32px; font-size: 22px; font-weight: 300;
+  color: var(--pebble); letter-spacing: .02em;
+}
+
+/* ════════════════════════════════
+   S03 — PROBLEM: FRAGMENTATION
+════════════════════════════════ */
+.s03 {
+  background: var(--white);
+  align-items: center; justify-content: center;
+  gap: 0;
+}
+.s03-left {
+  width: 420px; flex-shrink: 0;
+  padding: 0 72px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.s03-num {
+  font-family: var(--serif); font-size: 120px; font-weight: 500;
+  color: var(--moss); line-height: 1;
+}
+.s03-label {
+  font-family: var(--serif); font-size: 26px; font-weight: 400;
+  color: var(--stone); line-height: 1.3;
+}
+.s03-label em { font-style: italic; font-weight: 300; color: var(--sage); }
+.s03-right {
+  flex: 1; height: 720px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  border-left: 1px solid var(--mist);
+}
+.s03-chip {
+  display: flex; flex-direction: column;
+  justify-content: center; padding: 0 40px;
+  border-bottom: 1px solid var(--mist);
+  gap: 8px;
+}
+.s03-chip:nth-child(even) { border-left: 1px solid var(--mist); }
+.s03-chip-name {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--pebble);
+}
+.s03-chip-cost {
+  font-family: var(--serif); font-size: 28px; font-weight: 500; color: var(--moss);
+}
+.s03-chip-desc { font-size: 13px; font-weight: 300; color: var(--pebble); }
+
+/* ════════════════════════════════
+   S04 — PROBLEM: RISK
+════════════════════════════════ */
+.s04 {
+  background: var(--black);
+  align-items: center; justify-content: center;
+  text-align: center; flex-direction: column;
+}
+.s04-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(45,74,45,.3) 0%, transparent 70%);
+}
+.s04-content { position: relative; z-index: 1; }
+.s04-q {
+  font-family: var(--serif); font-size: 62px; font-weight: 500;
+  color: var(--white); line-height: 1.15; max-width: 860px; margin-bottom: 60px;
+}
+.s04-q em { font-style: italic; font-weight: 300; color: var(--sage); }
+.s04-stats {
+  display: flex; gap: 2px; justify-content: center;
+}
+.s04-stat {
+  padding: 32px 48px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+}
+.s04-stat:first-child { border-radius: 8px 0 0 8px; }
+.s04-stat:last-child  { border-radius: 0 8px 8px 0; }
+.s04-n {
+  font-family: var(--serif); font-size: 52px; font-weight: 500;
+  color: var(--sage); line-height: 1; margin-bottom: 10px;
+}
+.s04-t {
+  font-size: 16px; font-weight: 300;
+  color: rgba(255,255,255,.4); line-height: 1.5; max-width: 220px;
+}
+
+/* ════════════════════════════════
+   S05 — SOLUTION
+════════════════════════════════ */
+.s05 {
+  background: var(--moss);
+  align-items: center; justify-content: center;
+  text-align: center; flex-direction: column;
+}
+.s05-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 65% 55% at 40% 50%, #3D6B3D 0%, transparent 65%);
+}
+.s05-content { position: relative; z-index: 1; }
+.s05-pre {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: .25em; text-transform: uppercase;
+  color: var(--mist); opacity: .5; margin-bottom: 32px;
+}
+.s05-h {
+  font-family: var(--serif); font-size: 80px; font-weight: 500;
+  color: var(--white); line-height: 1.1; margin-bottom: 32px;
+}
+.s05-h em { font-style: italic; font-weight: 300; color: var(--sage); }
+.s05-sub {
+  font-size: 22px; font-weight: 300; color: rgba(255,255,255,.55);
+  max-width: 640px; line-height: 1.5;
+}
+
+/* ════════════════════════════════
+   S06 — HOW IT WORKS (STACK)
+════════════════════════════════ */
+.s06 {
+  background: var(--chalk);
+  align-items: stretch;
+}
+.s06-left {
+  width: 460px; flex-shrink: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 64px; gap: 20px;
+  border-right: 1px solid var(--mist);
+}
+.s06-h {
+  font-family: var(--serif); font-size: 48px; font-weight: 500;
+  color: var(--moss); line-height: 1.15;
+}
+.s06-h em { font-style: italic; font-weight: 300; color: var(--sage); }
+.s06-body {
+  font-size: 18px; font-weight: 300; color: var(--stone); line-height: 1.7;
+}
+.s06-right {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding: 60px 56px;
+}
+.stack {
+  display: flex; flex-direction: column;
+  gap: 0; width: 100%; max-width: 380px;
+}
+.stack-layer {
+  border-radius: 10px; padding: 20px 28px;
+  display: flex; align-items: center; gap: 18px;
+}
+.sl-server   { background: var(--moss); margin: 0 24px; }
+.sl-services { background: var(--fern); margin: 8px 12px; }
+.sl-devices  { background: var(--sage); margin: 8px 0; }
+.stack-arrow {
+  text-align: center; padding: 6px 0;
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--pebble);
+}
+.sl-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: rgba(255,255,255,.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.sl-title {
+  font-size: 14px; font-weight: 500; color: rgba(255,255,255,.95);
+  margin-bottom: 3px;
+}
+.sl-sub {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .1em; color: rgba(255,255,255,.45);
+}
+
+/* ════════════════════════════════
+   S07 — LIFECYCLE (SARAH)
+════════════════════════════════ */
+.s07 {
+  background: var(--white);
+  flex-direction: column;
+  align-items: stretch;
+}
+.s07-top {
+  padding: 52px 72px 36px;
+  border-bottom: 1px solid var(--mist);
+  display: flex; align-items: flex-end; justify-content: space-between;
+}
+.s07-h {
+  font-family: var(--serif); font-size: 42px; font-weight: 500;
+  color: var(--moss); line-height: 1.15;
+}
+.s07-h em { font-style: italic; font-weight: 300; color: var(--sage); }
+.s07-note { font-size: 17px; font-weight: 300; color: var(--pebble); }
+.s07-body {
+  flex: 1; display: flex;
+  align-items: center; padding: 0 72px 52px;
+  position: relative;
+}
+.s07-line {
+  position: absolute; top: 50%; left: 72px; right: 72px;
+  height: 2px;
+  background: linear-gradient(to right, var(--mist), var(--sage) 70%, var(--amber));
+  transform: translateY(-50%);
+}
+.s07-steps {
+  display: flex; width: 100%; justify-content: space-between;
+  position: relative; z-index: 1; align-items: center;
+}
+.s07-step { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.s07-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--white); border: 2px solid var(--sage);
+}
+.s07-dot.hi { background: var(--sage); border-color: var(--moss); }
+.s07-dot.end { background: var(--amber); border-color: var(--amber); }
+.s07-card {
+  background: var(--chalk); border: 1px solid var(--mist);
+  border-radius: 10px; padding: 20px 22px;
+  width: 195px; text-align: center;
+}
+.s07-card.end-card { border-color: rgba(212,134,10,.3); background: rgba(212,134,10,.04); }
+.s07-ct {
+  font-size: 13px; font-weight: 500; color: var(--moss);
+  margin-bottom: 6px; line-height: 1.3;
+}
+.s07-cd {
+  font-size: 12px; font-weight: 300; color: var(--pebble); line-height: 1.5;
+}
+.s07-ct2 {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .12em; margin-top: 8px;
+  color: var(--sage); background: var(--fog);
+  border-radius: 100px; padding: 3px 10px;
+  display: inline-block;
+}
+.s07-ct2.end-t { color: var(--amber); background: rgba(212,134,10,.08); }
+
+/* ════════════════════════════════
+   S08 — COMPLIANCE
+════════════════════════════════ */
+.s08 {
+  background: var(--white);
+  align-items: stretch;
+}
+.s08-left {
+  width: 50%; display: flex; flex-direction: column;
+  justify-content: center; padding: 80px 72px; gap: 28px;
+  border-right: 1px solid var(--mist);
+}
+.s08-pre { }
+.s08-h {
+  font-family: var(--serif); font-size: 52px; font-weight: 500;
+  color: var(--moss); line-height: 1.1;
+}
+.s08-h em { font-style: italic; font-weight: 300; color: var(--sage); }
+.s08-cost {
+  display: flex; align-items: baseline; gap: 12px;
+}
+.s08-cost-n {
+  font-family: var(--serif); font-size: 72px; font-weight: 500;
+  color: var(--amber); line-height: 1;
+}
+.s08-cost-label {
+  font-size: 15px; font-weight: 300; color: var(--stone); line-height: 1.4;
+}
+.s08-right {
+  flex: 1; background: var(--moss);
+  display: flex; flex-direction: column;
+  justify-content: center; padding: 80px 64px; gap: 20px;
+  position: relative; overflow: hidden;
+}
+.s08-right-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 70% at 70% 50%, #3D6B3D 0%, transparent 65%);
+}
+.s08-right-content { position: relative; z-index: 1; }
+.s08-ans {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--mist); opacity: .5; margin-bottom: 20px;
+}
+.s08-rh {
+  font-family: var(--serif); font-size: 40px; font-weight: 500;
+  color: var(--white); line-height: 1.2; margin-bottom: 32px;
+}
+.s08-rh em { font-style: italic; font-weight: 300; color: var(--sage); }
+.s08-items { display: flex; flex-direction: column; gap: 14px; }
+.s08-item {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 17px; font-weight: 300; color: rgba(255,255,255,.65);
+}
+.s08-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--sage); flex-shrink: 0;
+}
+.s08-zero {
+  margin-top: 28px; padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+.s08-zero-l {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(255,255,255,.3); margin-bottom: 6px;
+}
+.s08-zero-n {
+  font-family: var(--serif); font-size: 36px; font-weight: 500; color: var(--white);
+}
+.s08-zero-n em { font-style: italic; font-weight: 300; color: var(--sage); }
+
+/* ════════════════════════════════
+   S09 — MARKET
+════════════════════════════════ */
+.s09 {
+  background: var(--chalk);
+  align-items: stretch;
+}
+.s09-left {
+  width: 340px; flex-shrink: 0;
+  background: var(--moss);
+  display: flex; flex-direction: column;
+  justify-content: center; padding: 80px 52px;
+  position: relative; overflow: hidden;
+}
+.s09-left-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 60% 40%, #3D6B3D 0%, transparent 65%);
+}
+.s09-lc { position: relative; z-index: 1; }
+.s09-lp {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--mist); opacity: .5; margin-bottom: 20px;
+}
+.s09-ln {
+  font-family: var(--serif); font-size: 80px; font-weight: 500;
+  color: var(--white); line-height: .9;
+}
+.s09-ln span { font-size: 32px; color: var(--sage); }
+.s09-ll {
+  font-size: 14px; font-weight: 300;
+  color: rgba(255,255,255,.45); margin-top: 14px; line-height: 1.5;
+}
+.s09-right {
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center; padding: 72px 64px; gap: 20px;
+}
+.s09-h {
+  font-family: var(--serif); font-size: 42px; font-weight: 500;
+  color: var(--moss); line-height: 1.2; margin-bottom: 8px;
+}
+.s09-h em { font-style: italic; font-weight: 300; color: var(--sage); }
+/* bar chart */
+.bars { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+.bar-row { display: flex; align-items: center; gap: 16px; }
+.bar-name {
+  width: 190px; flex-shrink: 0;
+  font-size: 15px; font-weight: 400; color: var(--stone);
+}
+.bar-track {
+  flex: 1; height: 12px; background: var(--white);
+  border-radius: 100px; overflow: hidden;
+}
+.bar-fill { height: 100%; border-radius: 100px; }
+.bf-hi  { background: linear-gradient(to right, var(--amber), #e8970b); }
+.bf-lo  { background: var(--sage); }
+.bar-val {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  width: 110px; text-align: right; flex-shrink: 0;
+}
+.bv-hi { color: var(--amber); }
+.bv-lo { color: var(--fern); }
+.s09-src {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--pebble); margin-top: 4px;
+}
+
+/* ════════════════════════════════
+   S10 — PRICING
+════════════════════════════════ */
+.s10 {
+  background: var(--white);
+  flex-direction: column;
+}
+.s10-top {
+  padding: 52px 72px 32px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  border-bottom: 1px solid var(--mist);
+}
+.s10-h {
+  font-family: var(--serif); font-size: 42px; font-weight: 500; color: var(--moss);
+}
+.s10-h em { font-style: italic; font-weight: 300; color: var(--sage); }
+.s10-note { font-size: 14px; font-weight: 300; color: var(--pebble); font-style: italic; }
+.s10-cards {
+  flex: 1; display: flex; gap: 24px; padding: 32px 72px 48px; align-items: stretch;
+}
+.s10-card {
+  flex: 1; border-radius: 12px; border: 1px solid var(--mist);
+  padding: 36px 32px; display: flex; flex-direction: column; gap: 16px;
+  background: var(--chalk);
+}
+.s10-card.feat { background: var(--moss); border-color: var(--fern); position: relative; }
+.s10-card.feat::before {
+  content: 'Most popular';
+  position: absolute; top: 14px; right: 14px;
+  font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--sage); background: rgba(255,255,255,.08);
+  border-radius: 100px; padding: 4px 12px;
+}
+.s10-tier { font-family: var(--mono); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--sage); }
+.s10-tier.d { color: var(--mist); opacity: .6; }
+.s10-price { font-family: var(--serif); font-size: 52px; font-weight: 500; line-height: 1; color: var(--moss); }
+.s10-price.d { color: var(--white); }
+.s10-price span { font-family: var(--sans); font-size: 15px; font-weight: 300; color: var(--pebble); }
+.s10-price.d span { color: rgba(255,255,255,.4); }
+.s10-cap { font-size: 15px; font-weight: 300; color: var(--stone); padding-top: 8px; border-top: 1px solid var(--mist); }
+.s10-cap.d { color: rgba(255,255,255,.45); border-top-color: rgba(255,255,255,.1); }
+.s10-feats { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.s10-feat { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 300; color: var(--stone); }
+.s10-feat.d { color: rgba(255,255,255,.6); font-size: 15px; }
+.s10-ck {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--fog); display: flex; align-items: center;
+  justify-content: center; font-size: 9px; flex-shrink: 0; color: var(--fern);
+}
+.s10-ck.d { background: rgba(255,255,255,.08); color: var(--sage); }
+.s10-save {
+  text-align: center; padding: 0 72px 12px;
+}
+.s10-save-inner {
+  display: inline-block;
+  background: var(--fog); border: 1px solid var(--mist);
+  border-radius: 100px; padding: 10px 32px;
+  font-size: 15px; font-weight: 300; color: var(--moss);
+}
+.s10-save-inner strong { font-weight: 600; color: var(--fern); }
+
+/* ════════════════════════════════
+   S11 — TRACTION / ASK
+════════════════════════════════ */
+.s11 {
+  background: var(--moss);
+  align-items: stretch; position: relative; overflow: hidden;
+}
+.s11-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 55% 70% at 15% 50%, #3D6B3D 0%, transparent 60%),
+    radial-gradient(ellipse 35% 50% at 85% 20%, rgba(196,217,196,.04) 0%, transparent 55%);
+}
+.s11-left {
+  width: 55%; display: flex; flex-direction: column;
+  justify-content: center; padding: 80px 80px 80px 96px;
+  position: relative; z-index: 1;
+}
+.s11-pre {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .25em; text-transform: uppercase;
+  color: var(--mist); opacity: .5; margin-bottom: 24px;
+}
+.s11-h {
+  font-family: var(--serif); font-size: 56px; font-weight: 500;
+  color: var(--white); line-height: 1.12; margin-bottom: 40px;
+}
+.s11-h em { font-style: italic; font-weight: 300; color: var(--sage); }
+.s11-asks { display: flex; flex-direction: column; gap: 16px; }
+.s11-ask { display: flex; align-items: flex-start; gap: 16px; }
+.s11-ask-n {
+  width: 32px; height: 32px; border-radius: 6px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 10px; color: var(--sage);
+  flex-shrink: 0; margin-top: 2px;
+}
+.s11-ask-t {
+  font-size: 16px; font-weight: 300; color: rgba(255,255,255,.65); line-height: 1.5;
+}
+.s11-ask-t strong { font-weight: 500; color: var(--white); }
+.s11-right {
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center; padding: 80px 64px;
+  gap: 16px; position: relative; z-index: 1;
+}
+.s11-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 10px; padding: 22px 28px;
+}
+.s11-card-l {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 8px;
+}
+.s11-card-v {
+  font-family: var(--serif); font-size: 28px; font-weight: 500; color: var(--white);
+}
+.s11-card-v em { font-style: italic; font-weight: 300; color: var(--sage); }
+.s11-card-sub {
+  font-size: 13px; font-weight: 300; color: rgba(255,255,255,.4);
+  margin-top: 4px;
+}
+
+/* ════════════════════════════════
+   S12 — CLOSE
+════════════════════════════════ */
+.s12 {
+  background: var(--chalk);
+  align-items: center; justify-content: center;
+  text-align: center; flex-direction: column;
+}
+.s12-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 55% 50% at 50% 50%, rgba(45,74,45,.06) 0%, transparent 70%);
+}
+.s12-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.s12-wm {
+  font-family: var(--serif); font-size: 40px; font-weight: 500; color: var(--moss);
+}
+.s12-wm em { font-style: italic; font-weight: 300; color: var(--sage); }
+.s12-rule { width: 40px; height: 1px; background: var(--mist); }
+.s12-name {
+  font-family: var(--serif); font-size: 32px; font-weight: 500; color: var(--moss);
+}
+.s12-bio {
+  font-size: 18px; font-weight: 300; color: var(--stone);
+  max-width: 540px; line-height: 1.65; text-align: center;
+}
+.s12-cta {
+  margin-top: 8px; background: var(--moss); color: var(--white);
+  border-radius: 100px; padding: 14px 44px;
+  font-size: 16px; font-weight: 400; letter-spacing: .02em;
+}
+
+/* ════════════════════════════════
+   NAV
+════════════════════════════════ */
+#progress {
+  position: fixed; top: 0; left: 0;
+  height: 2px; background: var(--sage);
+  z-index: 200;
+}
+#nav {
+  position: fixed; bottom: 18px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(15,15,12,.88);
+  backdrop-filter: blur(12px);
+  border-radius: 100px; padding: 8px 18px; z-index: 200;
+}
+.nb {
+  width: 30px; height: 30px; border: none; background: transparent;
+  color: rgba(255,255,255,.45); font-size: 15px; cursor: pointer;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+}
+.nb:hover { background: rgba(255,255,255,.1); color: var(--white); }
+.ndots { display: flex; gap: 5px; align-items: center; }
+.ndot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(255,255,255,.2); cursor: pointer;
+}
+.ndot.on { background: var(--sage); width: 16px; border-radius: 3px; }
+#sc {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .12em; color: rgba(255,255,255,.25); min-width: 36px; text-align: center;
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="deck-scaler">
+<div id="deck">
+
+<!-- ══ 01 COVER ══ -->
+<div class="slide s01 active">
+  <div class="s01-bg"></div>
+  <svg class="bot" style="right:-20px;top:50%;transform:translateY(-50%);width:440px;height:440px;opacity:.1;" viewBox="0 0 340 340" fill="none">
+    <circle cx="170" cy="170" r="148" stroke="#C4D9C4" stroke-width=".75" stroke-dasharray="4 6"/>
+    <circle cx="170" cy="170" r="108" stroke="#C4D9C4" stroke-width=".5"/>
+    <circle cx="170" cy="170" r="62" stroke="#C4D9C4" stroke-width=".75"/>
+    <line x1="170" y1="22" x2="170" y2="108" stroke="#C4D9C4" stroke-width=".75"/>
+    <line x1="170" y1="232" x2="170" y2="318" stroke="#C4D9C4" stroke-width=".75"/>
+    <line x1="22" y1="170" x2="108" y2="170" stroke="#C4D9C4" stroke-width=".75"/>
+    <line x1="232" y1="170" x2="318" y2="170" stroke="#C4D9C4" stroke-width=".75"/>
+    <path d="M170 108 C148 80 130 58 170 22 C210 58 192 80 170 108Z" fill="rgba(196,217,196,.1)" stroke="#C4D9C4" stroke-width=".75"/>
+    <path d="M170 232 C148 260 130 282 170 318 C210 282 192 260 170 232Z" fill="rgba(196,217,196,.08)" stroke="#C4D9C4" stroke-width=".75"/>
+    <path d="M108 170 C80 148 58 130 22 170 C58 210 80 192 108 170Z" fill="rgba(196,217,196,.08)" stroke="#C4D9C4" stroke-width=".75"/>
+    <path d="M232 170 C260 148 282 130 318 170 C282 210 260 192 232 170Z" fill="rgba(196,217,196,.1)" stroke="#C4D9C4" stroke-width=".75"/>
+    <circle cx="170" cy="170" r="8" fill="#7A9E7A"/>
+    <circle cx="170" cy="170" r="3" fill="#C4D9C4"/>
+  </svg>
+  <div class="s01-content">
+    <div class="s01-wm">Organic<em>OS</em></div>
+    <div class="s01-rule"></div>
+    <div class="s01-tag">The operating system for your organization.</div>
+  </div>
+  <div class="chrome chrome-d">
+    <span class="lm" style="color:rgba(255,255,255,.35);">Organic<em>OS</em></span>
+    <span class="sn">01 / 12</span>
+  </div>
+</div>
+
+<!-- ══ 02 HOOK ══ -->
+<div class="slide s02">
+  <svg class="bot" style="right:-50px;top:-50px;width:360px;height:360px;opacity:.06;" viewBox="0 0 340 340" fill="none">
+    <circle cx="170" cy="170" r="148" stroke="#2D4A2D" stroke-width=".75" stroke-dasharray="4 6"/>
+    <circle cx="170" cy="170" r="108" stroke="#2D4A2D" stroke-width=".5"/>
+    <circle cx="170" cy="170" r="62" stroke="#2D4A2D" stroke-width=".75"/>
+    <path d="M170 108 C148 80 130 58 170 22 C210 58 192 80 170 108Z" fill="rgba(45,74,45,.08)" stroke="#2D4A2D" stroke-width=".75"/>
+    <path d="M170 232 C148 260 130 282 170 318 C210 282 192 260 170 232Z" fill="rgba(45,74,45,.06)" stroke="#2D4A2D" stroke-width=".75"/>
+    <circle cx="170" cy="170" r="8" fill="#3D6B3D"/>
+  </svg>
+  <div class="s02-h">You didn't start your organization<br>to manage <em>IT.</em></div>
+  <div class="s02-sub">Yet here you are.</div>
+  <div class="chrome chrome-l">
+    <span class="lm">Organic<em>OS</em></span>
+    <span class="sn">02 / 12</span>
+  </div>
+</div>
+
+<!-- ══ 03 PROBLEM: FRAGMENTATION ══ -->
+<div class="slide s03" style="background:var(--white);flex-direction:column;">
+  <div style="padding:52px 72px 32px;border-bottom:1px solid var(--mist);display:flex;align-items:flex-end;gap:24px;">
+    <div class="label">The problem</div>
+    <div style="font-family:var(--serif);font-size:40px;font-weight:500;color:var(--moss);line-height:1.1;">Six tools. Six vendors. <em style="font-weight:300;color:var(--sage);">Nobody in charge.</em></div>
+  </div>
+  <div style="flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:1px;background:var(--mist);">
+    <div style="background:var(--white);padding:32px 36px;display:flex;flex-direction:column;gap:14px;">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="30" height="21" rx="2"/><polyline points="5,10 20,22 35,10"/></g></svg>
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);">Email</div>
+      <div style="font-family:var(--serif);font-size:20px;font-style:italic;font-weight:400;color:var(--stone);line-height:1.35;">"Did that contract get sent? I can't find the thread."</div>
+    </div>
+    <div style="background:var(--white);padding:32px 36px;display:flex;flex-direction:column;gap:14px;">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14h30v17a2 2 0 01-2 2H7a2 2 0 01-2-2V14z"/><path d="M5 14V11a2 2 0 012-2h8l3 3h13a2 2 0 012 2"/></g></svg>
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);">File sharing</div>
+      <div style="font-family:var(--serif);font-size:20px;font-style:italic;font-weight:400;color:var(--stone);line-height:1.35;">"The latest version is on someone's desktop."</div>
+    </div>
+    <div style="background:var(--white);padding:32px 36px;display:flex;flex-direction:column;gap:14px;">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="18" width="22" height="16" rx="2"/><path d="M13 18v-5a7 7 0 0114 0v5"/><circle cx="20" cy="26" r="2" fill="var(--sage)" stroke="none"/></g></svg>
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);">Access & VPN</div>
+      <div style="font-family:var(--serif);font-size:20px;font-style:italic;font-weight:400;color:var(--stone);line-height:1.35;">"She left six months ago. Does she still have access?"</div>
+    </div>
+    <div style="background:var(--white);padding:32px 36px;display:flex;flex-direction:column;gap:14px;">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="22" height="18" rx="2"/><polyline points="25,15 37,10 37,30 25,25"/></g></svg>
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);">Video & Comms</div>
+      <div style="font-family:var(--serif);font-size:20px;font-style:italic;font-weight:400;color:var(--stone);line-height:1.35;">"Which app are we using for this call again?"</div>
+    </div>
+    <div style="background:var(--white);padding:32px 36px;display:flex;flex-direction:column;gap:14px;">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4l14 5v9c0 7-6 12-14 14C12 30 6 25 6 18V9z"/><polyline points="14,20 18,24 27,15"/></g></svg>
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);">Backups</div>
+      <div style="font-family:var(--serif);font-size:20px;font-style:italic;font-weight:400;color:var(--stone);line-height:1.35;">"I think it's backing up. Nobody really checks."</div>
+    </div>
+    <div style="background:var(--fog);padding:32px 36px;display:flex;flex-direction:column;gap:14px;border:1px dashed var(--mist);">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="var(--pebble)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4v4M20 32v4M4 20h4M32 20h4M7.5 7.5l3 3M29.5 29.5l3 3M32.5 7.5l-3 3M10.5 29.5l-3 3"/><circle cx="20" cy="20" r="5"/></g></svg>
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--pebble);">Compliance</div>
+      <div style="font-family:var(--serif);font-size:20px;font-style:italic;font-weight:400;color:var(--pebble);line-height:1.35;">"NIS2 applies to us. We have no idea where to start."</div>
+    </div>
+  </div>
+  <div class="chrome chrome-l">
+    <span class="lm">Organic<em>OS</em></span>
+    <span class="sn">03 / 12</span>
+  </div>
+</div>
+
+<!-- ══ 04 PROBLEM: RISK ══ -->
+<div class="slide s04">
+  <div class="s04-bg"></div>
+  <div class="s04-content">
+    <div class="s04-q">Who has access to your<br>organization's data —<br><em>right now?</em></div>
+    <div class="s04-stats">
+      <div class="s04-stat">
+        <div class="s04-n">1 in 3</div>
+        <div class="s04-t">breaches involve a current or former employee</div>
+      </div>
+      <div class="s04-stat">
+        <div class="s04-n">68%</div>
+        <div class="s04-t">of orgs can't account for all access within an hour</div>
+      </div>
+      <div class="s04-stat">
+        <div class="s04-n">47 days</div>
+        <div class="s04-t">average time to detect unauthorized access after departure</div>
+      </div>
+    </div>
+  </div>
+  <div class="chrome chrome-d">
+    <span class="lm" style="color:rgba(255,255,255,.3);">Organic<em>OS</em></span>
+    <span class="sn">04 / 12</span>
+  </div>
+</div>
+
+<!-- ══ 05 SOLUTION ══ -->
+<div class="slide s05">
+  <div class="s05-bg"></div>
+  <svg class="bot" style="right:-30px;top:50%;transform:translateY(-50%);width:420px;height:420px;opacity:.1;" viewBox="0 0 340 340" fill="none">
+    <circle cx="170" cy="170" r="148" stroke="#C4D9C4" stroke-width=".75" stroke-dasharray="4 6"/>
+    <circle cx="170" cy="170" r="108" stroke="#C4D9C4" stroke-width=".5"/>
+    <circle cx="170" cy="170" r="62" stroke="#C4D9C4" stroke-width=".75"/>
+    <line x1="170" y1="22" x2="170" y2="108" stroke="#C4D9C4" stroke-width=".75"/>
+    <line x1="170" y1="232" x2="170" y2="318" stroke="#C4D9C4" stroke-width=".75"/>
+    <line x1="22" y1="170" x2="108" y2="170" stroke="#C4D9C4" stroke-width=".75"/>
+    <line x1="232" y1="170" x2="318" y2="170" stroke="#C4D9C4" stroke-width=".75"/>
+    <path d="M170 108 C148 80 130 58 170 22 C210 58 192 80 170 108Z" fill="rgba(196,217,196,.1)" stroke="#C4D9C4" stroke-width=".75"/>
+    <path d="M170 232 C148 260 130 282 170 318 C210 282 192 260 170 232Z" fill="rgba(196,217,196,.08)" stroke="#C4D9C4" stroke-width=".75"/>
+    <path d="M108 170 C80 148 58 130 22 170 C58 210 80 192 108 170Z" fill="rgba(196,217,196,.08)" stroke="#C4D9C4" stroke-width=".75"/>
+    <path d="M232 170 C260 148 282 130 318 170 C282 210 260 192 232 170Z" fill="rgba(196,217,196,.1)" stroke="#C4D9C4" stroke-width=".75"/>
+    <circle cx="170" cy="170" r="8" fill="#7A9E7A"/>
+    <circle cx="170" cy="170" r="3" fill="#C4D9C4"/>
+  </svg>
+  <div class="s05-content">
+    <div class="s05-pre">Introducing</div>
+    <div class="s05-h">Organic<em>OS</em></div>
+    <div class="s05-sub">One subscription. Everything your organization needs — managed, secure, and always under your control.</div>
+  </div>
+  <div class="chrome chrome-d">
+    <span class="lm" style="color:rgba(255,255,255,.35);">Organic<em>OS</em></span>
+    <span class="sn">05 / 12</span>
+  </div>
+</div>
+
+<!-- ══ 06 HOW IT WORKS ══ -->
+<div class="slide s06">
+  <div class="s06-left">
+    <div class="label">One platform</div>
+    <div class="s06-h">Your whole stack,<br><em>one place.</em></div>
+    <div class="s06-body">From the organizational server to every employee's workspace. Policies enforced everywhere, automatically.</div>
+  </div>
+  <div class="s06-right">
+    <div class="stack" style="max-width:460px;">
+      <div class="stack-layer sl-devices" style="padding:24px 32px;gap:24px;">
+        <div class="sl-icon" style="width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="30" height="20" rx="2"/><path d="M2 28h36v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2z"/></g></g></svg></div>
+        <div>
+          <div class="sl-title" style="font-size:20px;margin-bottom:6px;">Employee Workspaces</div>
+          <div class="sl-sub" style="font-size:13px;letter-spacing:.06em;">Isolated · Role-configured · Portable</div>
+        </div>
+      </div>
+      <div class="stack-arrow" style="font-size:11px;padding:10px 0;">↕ policies enforced automatically</div>
+      <div class="stack-layer sl-services" style="padding:24px 32px;gap:24px;">
+        <div class="sl-icon" style="width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="20" r="5"/><path d="M20 4v4M20 32v4M4 20h4M32 20h4M7.5 7.5l3 3M29.5 29.5l3 3M32.5 7.5l-3 3M10.5 29.5l-3 3"/></g></svg></div>
+        <div>
+          <div class="sl-title" style="font-size:20px;margin-bottom:6px;">Organization Services</div>
+          <div class="sl-sub" style="font-size:13px;letter-spacing:.06em;">Email · Files · Video · VPN · Backups</div>
+        </div>
+      </div>
+      <div class="stack-arrow" style="font-size:11px;padding:10px 0;">↕ managed by OrganicOS</div>
+      <div class="stack-layer sl-server" style="padding:24px 32px;gap:24px;">
+        <div class="sl-icon" style="width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="32" height="22" rx="2"/><line x1="12" y1="35" x2="28" y2="35"/><line x1="20" y1="27" x2="20" y2="35"/></g></svg></div>
+        <div>
+          <div class="sl-title" style="font-size:20px;margin-bottom:6px;">Organizational Server</div>
+          <div class="sl-sub" style="font-size:13px;letter-spacing:.06em;">EU-hosted · Always managed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chrome chrome-l">
+    <span class="lm">Organic<em>OS</em></span>
+    <span class="sn">06 / 12</span>
+  </div>
+</div>
+
+<!-- ══ 07 LIFECYCLE ══ -->
+<div class="slide s07">
+  <div class="s07-top">
+    <div>
+      <div class="label" style="margin-bottom:10px;">In practice</div>
+      <div class="s07-h">Sarah joins as accountant. <em>Six months later, she leaves.</em></div>
+    </div>
+    <div class="s07-note">No IT support. No manual steps. No loose ends.</div>
+  </div>
+  <div class="s07-body">
+    <div class="s07-line"></div>
+    <div class="s07-steps">
+      <div class="s07-step">
+        <div class="s07-card">
+          <div style="margin-bottom:10px;"><svg width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="13" r="6"/><path d="M6 35c0-7.7 6.3-14 14-14s14 6.3 14 14"/></g></svg></div>
+          <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);margin-bottom:8px;">01</div>
+          <div class="s07-ct" style="font-size:15px;">Role defined</div>
+          <div class="s07-cd" style="font-size:13px;margin-top:6px;">Select her role in the dashboard</div>
+          <div class="s07-ct2">2 minutes</div>
+        </div>
+        <div class="s07-dot hi"></div>
+      </div>
+      <div class="s07-step">
+        <div class="s07-card">
+          <div style="margin-bottom:10px;"><svg width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="30" height="20" rx="2"/><path d="M2 28h36v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2z"/></g></svg></div>
+          <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);margin-bottom:8px;">02</div>
+          <div class="s07-ct" style="font-size:15px;">Workspace ready</div>
+          <div class="s07-cd" style="font-size:13px;margin-top:6px;">Preconfigured for her role, on any device</div>
+          <div class="s07-ct2">Automatic</div>
+        </div>
+        <div class="s07-dot hi"></div>
+      </div>
+      <div class="s07-step">
+        <div class="s07-card">
+          <div style="margin-bottom:10px;"><svg width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="20" r="15"/><polyline points="12,20 17,26 28,14"/></g></svg></div>
+          <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);margin-bottom:8px;">03</div>
+          <div class="s07-ct" style="font-size:15px;">She's working</div>
+          <div class="s07-cd" style="font-size:13px;margin-top:6px;">Plugs in. Has everything she needs.</div>
+          <div class="s07-ct2">Day one</div>
+        </div>
+        <div class="s07-dot hi"></div>
+      </div>
+      <div class="s07-step">
+        <div class="s07-card">
+          <div style="margin-bottom:10px;"><svg width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,32 14,18 22,24 36,8"/><polyline points="26,8 36,8 36,18"/></g></svg></div>
+          <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);margin-bottom:8px;">04</div>
+          <div class="s07-ct" style="font-size:15px;">Team grows</div>
+          <div class="s07-cd" style="font-size:13px;margin-top:6px;">New people, same process. Adapts automatically.</div>
+          <div class="s07-ct2">Always consistent</div>
+        </div>
+        <div class="s07-dot hi"></div>
+      </div>
+      <div class="s07-step">
+        <div class="s07-card end-card">
+          <div style="margin-bottom:10px;"><svg width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="18" width="22" height="16" rx="2"/><path d="M13 18v-5a7 7 0 0114 0v5"/><circle cx="20" cy="26" r="2" fill="var(--amber)" stroke="none"/></g></svg></div>
+          <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;">05</div>
+          <div class="s07-ct" style="font-size:15px;">Sarah leaves</div>
+          <div class="s07-cd" style="font-size:13px;margin-top:6px;">One action. Access revoked everywhere. Instantly.</div>
+          <div class="s07-ct2 end-t">Zero risk</div>
+        </div>
+        <div class="s07-dot end"></div>
+      </div>
+    </div>
+  </div>
+  <div class="chrome chrome-l">
+    <span class="lm">Organic<em>OS</em></span>
+    <span class="sn">07 / 12</span>
+  </div>
+</div>
+
+<!-- ══ 08 COMPLIANCE ══ -->
+<div class="slide s08">
+  <div class="s08-left">
+    <div class="label">NIS2 · GDPR · ISO 27001</div>
+    <div class="s08-h">Compliance is now<br>a legal <em>obligation.</em></div>
+    <div class="s08-cost">
+      <div class="s08-cost-n">€200K+</div>
+      <div class="s08-cost-label">traditional path:<br>consultants, audits,<br>months of work</div>
+    </div>
+    <div style="font-size:14px;font-weight:300;color:var(--pebble);line-height:1.6;">34% of SMEs say they<br>cannot find the budget to comply.</div>
+  </div>
+  <div class="s08-right">
+    <div class="s08-right-bg"></div>
+    <div class="s08-right-content">
+      <div class="s08-ans">With OrganicOS</div>
+      <div class="s08-rh">Compliant by design,<br><em>from day one.</em></div>
+      <div class="s08-items">
+        <div class="s08-item"><div class="s08-dot"></div>Access control across the full stack</div>
+        <div class="s08-item"><div class="s08-dot"></div>Encryption at rest and in transit</div>
+        <div class="s08-item"><div class="s08-dot"></div>Audit trail built into every config</div>
+        <div class="s08-item"><div class="s08-dot"></div>EU data sovereignty by default</div>
+      </div>
+      <div class="s08-zero">
+        <div class="s08-zero-l">Compliance cost with OrganicOS</div>
+        <div class="s08-zero-n">€0 <em>extra.</em></div>
+      </div>
+    </div>
+  </div>
+  <div class="chrome chrome-l">
+    <span class="lm">Organic<em>OS</em></span>
+    <span class="sn">08 / 12</span>
+  </div>
+</div>
+
+<!-- ══ 09 MARKET ══ -->
+<div class="slide s09" style="flex-direction:column;">
+  <!-- top row: 3 big stats -->
+  <div style="display:flex;align-items:stretch;border-bottom:1px solid var(--mist);">
+    <div style="background:var(--moss);padding:44px 52px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;width:340px;flex-shrink:0;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,#3D6B3D,transparent 65%);"></div>
+      <div style="position:relative;z-index:1;">
+        <div class="label" style="color:var(--mist);opacity:.5;margin-bottom:14px;">EU small businesses</div>
+        <div style="font-family:var(--serif);font-size:72px;font-weight:500;color:var(--white);line-height:.9;">33<span style="font-size:28px;color:var(--sage);">M</span></div>
+        <div style="font-size:13px;font-weight:300;color:rgba(255,255,255,.45);margin-top:12px;line-height:1.5;">under 50 employees,<br>no IT department</div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;border-left:1px solid var(--mist);">
+      <div style="flex:1;padding:36px 40px;border-right:1px solid var(--mist);display:flex;flex-direction:column;justify-content:center;">
+        <div class="label" style="margin-bottom:12px;">NIS2 directly affected</div>
+        <div style="font-family:var(--serif);font-size:52px;font-weight:500;color:var(--moss);line-height:1;">160<span style="font-size:22px;color:var(--sage);">K+</span></div>
+        <div style="font-size:13px;font-weight:300;color:var(--pebble);margin-top:8px;line-height:1.5;">organizations subject to new<br>cybersecurity obligations</div>
+      </div>
+      <div style="flex:1;padding:36px 40px;display:flex;flex-direction:column;justify-content:center;">
+        <div class="label" style="margin-bottom:12px;">Cannot afford compliance</div>
+        <div style="font-family:var(--serif);font-size:52px;font-weight:500;color:var(--amber);line-height:1;">34<span style="font-size:22px;">%</span></div>
+        <div style="font-size:13px;font-weight:300;color:var(--pebble);margin-top:8px;line-height:1.5;">of SMEs say they cannot find<br>the budget to comply</div>
+      </div>
+    </div>
+  </div>
+  <!-- bottom row: cost comparison -->
+  <div style="flex:1;display:flex;align-items:center;padding:28px 52px;gap:48px;">
+    <div style="flex-shrink:0;">
+      <div class="label" style="margin-bottom:6px;">The opportunity</div>
+      <div style="font-family:var(--serif);font-size:32px;font-weight:500;color:var(--moss);line-height:1.15;">Monthly IT cost —<br><em style="font-weight:300;color:var(--sage);">20-person org</em></div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:14px;">
+      <div class="bar-row">
+        <div class="bar-name">IT management</div>
+        <div class="bar-track" style="height:14px;"><div class="bar-fill bf-hi" style="width:80%;"></div></div>
+        <div class="bar-val bv-hi">€2,000–3,000</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">SaaS tools</div>
+        <div class="bar-track" style="height:14px;"><div class="bar-fill bf-hi" style="width:26%;"></div></div>
+        <div class="bar-val bv-hi">€500–800</div>
+      </div>
+      <div class="bar-row" style="margin-top:4px;">
+        <div class="bar-name" style="font-weight:600;color:var(--moss);">OrganicOS</div>
+        <div class="bar-track" style="height:14px;"><div class="bar-fill bf-lo" style="width:15%;"></div></div>
+        <div class="bar-val bv-lo" style="font-weight:600;">€600 / mo</div>
+      </div>
+    </div>
+    <div style="background:var(--fog);border:1px solid var(--mist);border-radius:10px;padding:20px 28px;flex-shrink:0;text-align:center;">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--pebble);margin-bottom:6px;">Monthly saving</div>
+      <div style="font-family:var(--serif);font-size:40px;font-weight:500;color:var(--fern);line-height:1;">€1,900<span style="font-size:16px;font-family:var(--sans);font-weight:300;color:var(--stone);">+</span></div>
+    </div>
+  </div>
+  <div class="chrome chrome-l">
+    <span class="lm">Organic<em>OS</em></span>
+    <span style="font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--pebble);">Eurostat 2024 · Captain IT 2026 · ENISA 2024</span>
+    <span class="sn">09 / 12</span>
+  </div>
+</div>
+
+<!-- ══ 10 PRICING ══ -->
+<div class="slide s10">
+  <div class="s10-top">
+    <div>
+      <div class="label" style="margin-bottom:10px;">Pricing</div>
+      <div class="s10-h">Simple. <em>All-inclusive.</em></div>
+    </div>
+    <div class="s10-note">One subscription. No setup fees. No hidden costs.</div>
+  </div>
+  <div class="s10-cards">
+    <div class="s10-card">
+      <div class="s10-tier">Starter</div>
+      <div class="s10-price">€250<span>/month</span></div>
+      <div class="s10-cap">Up to 10 people</div>
+      <div class="s10-feats">
+        <div class="s10-feat"><div class="s10-ck">✓</div>All services included</div>
+        <div class="s10-feat"><div class="s10-ck">✓</div>Managed EU server</div>
+        <div class="s10-feat"><div class="s10-ck">✓</div>Workspace dashboard</div>
+        <div class="s10-feat"><div class="s10-ck">✓</div>Compliance by design</div>
+      </div>
+    </div>
+    <div class="s10-card feat">
+      <div class="s10-tier d">Growth</div>
+      <div class="s10-price d">€600<span>/month</span></div>
+      <div class="s10-cap d">Up to 30 people</div>
+      <div class="s10-feats">
+        <div class="s10-feat d"><div class="s10-ck d">✓</div>Everything in Starter</div>
+        <div class="s10-feat d"><div class="s10-ck d">✓</div>Priority support</div>
+        <div class="s10-feat d"><div class="s10-ck d">✓</div>Advanced roles</div>
+        <div class="s10-feat d"><div class="s10-ck d">✓</div>Audit reporting</div>
+      </div>
+    </div>
+    <div class="s10-card">
+      <div class="s10-tier">Scale</div>
+      <div class="s10-price" style="font-size:36px;padding-top:6px;">Custom</div>
+      <div class="s10-cap">Larger organizations</div>
+      <div class="s10-feats">
+        <div class="s10-feat"><div class="s10-ck">✓</div>Everything in Growth</div>
+        <div class="s10-feat"><div class="s10-ck">✓</div>SLA guarantee</div>
+        <div class="s10-feat"><div class="s10-ck">✓</div>Custom deployment</div>
+        <div class="s10-feat"><div class="s10-ck">✓</div>Dedicated support</div>
+      </div>
+    </div>
+  </div>
+  <div class="s10-save">
+    <div class="s10-save-inner">A 20-person org saves <strong>over €1,900/month</strong> vs. managing IT the traditional way.</div>
+  </div>
+  <div class="chrome chrome-l">
+    <span class="lm">Organic<em>OS</em></span>
+    <span class="sn">10 / 12</span>
+  </div>
+</div>
+
+<!-- ══ 11 EARLY PARTNER ══ -->
+<div class="slide s11">
+  <div class="s11-bg"></div>
+  <div class="s11-left">
+    <div class="s11-pre">Join us early</div>
+    <div class="s11-h">Be an early <em>partner.</em></div>
+    <div style="font-size:17px;font-weight:300;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:28px;">We're looking for organizations ready to run their IT the smart way — and help shape what OrganicOS becomes.</div>
+    <div class="s11-asks">
+      <div class="s11-ask">
+        <div class="s11-ask-n"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x='4' y='4' width='32' height='32' rx='3'/><line x1='14' y1='14' x2='26' y2='14'/><line x1='14' y1='20' x2='26' y2='20'/><line x1='14' y1='26' x2='20' y2='26'/></g></svg></div>
+        <div class="s11-ask-t" style="font-size:17px;"><strong>Hands-on setup</strong> — we configure everything together from day one</div>
+      </div>
+      <div class="s11-ask">
+        <div class="s11-ask-n"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d='M20 4l14 5v9c0 7-6 12-14 14C12 30 6 25 6 18V9z'/><polyline points='13,20 17,24 27,14'/></g></svg></div>
+        <div class="s11-ask-t" style="font-size:17px;"><strong>Shape the product</strong> — direct access to the team, your feedback drives what gets built next</div>
+      </div>
+      <div class="s11-ask">
+        <div class="s11-ask-n"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" ><g stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx='20' cy='20' r='15'/><path d='M5 20h30'/><path d='M20 5c-5 4-8 9-8 15s3 11 8 15'/><path d='M20 5c5 4 8 9 8 15s-3 11-8 15'/></g></svg></div>
+        <div class="s11-ask-t" style="font-size:17px;"><strong>Grow together</strong> — as we scale, so do the benefits for our earliest partners</div>
+      </div>
+    </div>
+  </div>
+  <div class="s11-right">
+    <div class="s11-card" style="background:rgba(196,217,196,.08);border-color:rgba(196,217,196,.25);padding:32px 28px;text-align:center;">
+      <div class="s11-card-l" style="margin-bottom:12px;">Early partner offer</div>
+      <div style="font-family:var(--serif);font-size:72px;font-weight:500;color:var(--white);line-height:.9;">50<span style="font-size:30px;color:var(--sage);">%</span></div>
+      <div style="font-size:16px;font-weight:300;color:rgba(255,255,255,.5);margin-top:12px;line-height:1.6;">off the managed offering<br>for your first 6 months</div>
+    </div>
+    <div class="s11-card">
+      <div class="s11-card-l">Who we're looking for</div>
+      <div style="font-size:16px;font-weight:300;color:rgba(255,255,255,.6);line-height:1.8;margin-top:6px;">10–50 people · EU-based<br>Legal · Accounting · NGO · Tech</div>
+    </div>
+    <div class="s11-card">
+      <div class="s11-card-l">Get in touch</div>
+      <div style="font-family:var(--mono);font-size:13px;color:rgba(255,255,255,.5);margin-top:6px;line-height:2;">organicos@infotropic.tech<br>+357 777 8888 0</div>
+    </div>
+  </div>
+  <div class="chrome chrome-d">
+    <span class="lm" style="color:rgba(255,255,255,.3);">Organic<em>OS</em></span>
+    <span class="sn">11 / 12</span>
+  </div>
+</div>
+
+<!-- ══ 12 CLOSE ══ --><!-- ══ 12 CLOSE ══ -->
+<div class="slide s12">
+  <div class="s12-bg"></div>
+  <svg class="bot" style="left:-50px;top:50%;transform:translateY(-50%);width:280px;height:280px;opacity:.07;" viewBox="0 0 340 340" fill="none">
+    <circle cx="170" cy="170" r="148" stroke="#2D4A2D" stroke-width=".75" stroke-dasharray="4 6"/>
+    <circle cx="170" cy="170" r="108" stroke="#2D4A2D" stroke-width=".5"/>
+    <circle cx="170" cy="170" r="62" stroke="#2D4A2D" stroke-width=".75"/>
+    <path d="M170 108 C148 80 130 58 170 22 C210 58 192 80 170 108Z" fill="rgba(45,74,45,.08)" stroke="#2D4A2D" stroke-width=".75"/>
+    <path d="M170 232 C148 260 130 282 170 318 C210 282 192 260 170 232Z" fill="rgba(45,74,45,.06)" stroke="#2D4A2D" stroke-width=".75"/>
+    <circle cx="170" cy="170" r="8" fill="#3D6B3D"/>
+  </svg>
+  <svg class="bot" style="right:-50px;top:50%;transform:translateY(-50%) rotate(180deg);width:280px;height:280px;opacity:.07;" viewBox="0 0 340 340" fill="none">
+    <circle cx="170" cy="170" r="148" stroke="#2D4A2D" stroke-width=".75" stroke-dasharray="4 6"/>
+    <circle cx="170" cy="170" r="108" stroke="#2D4A2D" stroke-width=".5"/>
+    <circle cx="170" cy="170" r="62" stroke="#2D4A2D" stroke-width=".75"/>
+    <path d="M170 108 C148 80 130 58 170 22 C210 58 192 80 170 108Z" fill="rgba(45,74,45,.08)" stroke="#2D4A2D" stroke-width=".75"/>
+    <path d="M170 232 C148 260 130 282 170 318 C210 282 192 260 170 232Z" fill="rgba(45,74,45,.06)" stroke="#2D4A2D" stroke-width=".75"/>
+    <circle cx="170" cy="170" r="8" fill="#3D6B3D"/>
+  </svg>
+  <div class="s12-content">
+    <div class="s12-wm">Organic<em>OS</em></div>
+    <div class="s12-rule"></div>
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--pebble);">An Infotropic.tech venture</div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:4px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="font-size:15px;">📞</span>
+        <span style="font-family:var(--mono);font-size:15px;color:var(--stone);letter-spacing:.04em;">+357 777 8888 0</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="font-size:15px;">✉</span>
+        <span style="font-family:var(--mono);font-size:15px;color:var(--stone);letter-spacing:.04em;">organicos@infotropic.tech</span>
+      </div>
+    </div>
+    <div class="s12-cta" style="margin-top:4px;">Let's talk</div>
+  </div>
+  <div class="chrome chrome-l">
+    <span class="lm">Organic<em>OS</em></span>
+    <span class="sn">12 / 12</span>
+  </div>
+</div>
+
+</div><!-- /deck -->
+</div><!-- /scaler -->
+
+<div id="nav">
+  <button class="nb" id="bp">←</button>
+  <div class="ndots" id="ndots"></div>
+  <span id="sc">1 / 12</span>
+  <button class="nb" id="bn">→</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const ndots  = document.getElementById('ndots');
+const sc     = document.getElementById('sc');
+const prog   = document.getElementById('progress');
+const scaler = document.getElementById('deck-scaler');
+const total  = slides.length;
+let cur = 0;
+
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'ndot' + (i === 0 ? ' on' : '');
+  d.onclick = () => go(i);
+  ndots.appendChild(d);
+});
+
+function go(n) {
+  slides[cur].classList.remove('active');
+  ndots.children[cur].classList.remove('on');
+  cur = (n + total) % total;
+  slides[cur].classList.add('active');
+  ndots.children[cur].classList.add('on');
+  sc.textContent = (cur + 1) + ' / ' + total;
+  prog.style.width = ((cur + 1) / total * 100) + '%';
+}
+
+document.getElementById('bn').onclick = () => go(cur + 1);
+document.getElementById('bp').onclick = () => go(cur - 1);
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(cur + 1); }
+  if (e.key === 'ArrowLeft') go(cur - 1);
+});
+
+function scale() {
+  const s = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+  scaler.style.transform = 'scale(' + s + ')';
+  scaler.style.left = ((window.innerWidth  - 1280 * s) / 2) + 'px';
+  scaler.style.top  = ((window.innerHeight - 720  * s) / 2) + 'px';
+}
+window.addEventListener('resize', scale);
+scale();
+prog.style.width = (1 / total * 100) + '%';
+</script>
+</body>
+</html>
